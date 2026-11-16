@@ -1,0 +1,166 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry,graphicx,booktabs,array,microtype,xcolor,hyperref,fancyhdr}
+\geometry{margin=23mm}
+\definecolor{teal}{HTML}{206D78}\definecolor{navy}{HTML}{21394D}
+\hypersetup{colorlinks=true,urlcolor=teal,linkcolor=teal}
+\pagestyle{fancy}\fancyhf{}\lhead{\small\textcolor{teal}{Syracuse $\Phi$--$\Psi$}}\rhead{\small Étude des excursions mixtes, v17}\cfoot{\thepage}
+\setlength{\parindent}{0pt}\setlength{\parskip}{6pt}
+\newtheorem{theoreme}{Théorème}[section]
+\newtheorem{proposition}[theoreme]{Proposition}
+\newtheorem{corollaire}[theoreme]{Corollaire}
+\newtheorem{remarque}[theoreme]{Remarque}
+\newcommand{\vdeux}{\nu_2}
+\newcommand{\N}{\mathbb N}
+\begin{document}
+\begin{center}
+{\small\sffamily\color{teal} RECHERCHE EXACTE --- COMPATIBILITÉ ENTRE HORIZONS}\par\vspace{9pt}
+{\Large\bfseries\color{navy} Syracuse $\Phi$--$\Psi$ : matrice des excursions mixtes}\par\vspace{6pt}
+{\large Deux barrières dynamiques, fenêtre des premiers départs et mot critique}\par\vspace{8pt}
+{\small Annexe de recherche autonome --- 16 novembre 2026 --- version 17}
+\end{center}
+\vspace{4pt}
+\noindent\fcolorbox{teal!30}{teal!5}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\textbf{Portée.} Nous présentons une classification logique exhaustive des orbites et un certificat arithmétique exact de première descente à horizon fini. Nous identifions une famille non périodique critique qui échappe aux deux critères précédents. \textbf{Ni la convergence universelle ni l'exclusion d'une orbite divergente ne sont démontrées.}}}
+\tableofcontents
+\section{Définitions : deux problèmes distincts}
+Sur les entiers strictement positifs, l'opérateur accéléré est
+\[U(n)=\begin{cases}(3n+1)/2&\text{si }n\text{ est impair},\\n/2&\text{si }n\text{ est pair}.\end{cases}\]
+Une orbite \emph{terminale} atteint $1$ et parcourt ensuite $1\leftrightarrow 2$ ; une orbite \emph{périodique non terminale} entre dans un cycle fini disjoint de $1$ ; une orbite \emph{divergente} vérifie $U^k(n)\to+\infty$. Ce sont les trois seules formes possibles.
+\begin{proposition}[Trichotomie qualitative exacte]\label{prop:tri}
+Toute orbite d'un entier positif atteint $1$, ou est ultimement périodique sans atteindre $1$, ou tend vers $+\infty$.
+\end{proposition}
+\begin{proof}
+Si une orbite infinie ne tend pas vers $+\infty$, il existe un seuil entier $B$ visité à une infinité d'instants. Parmi les $B$ entiers positifs $\le B$, au moins un est rencontré deux fois. L'opérateur étant déterministe, la trajectoire devient périodique. Si son cycle contient $1$, le comportement est terminal ; sinon, il est non terminal.
+\end{proof}
+\textbf{Classification abstraite : démontrée.} En revanche, \emph{quels} cas non terminaux existent effectivement n'est pas caractérisé, et la divergence d'un entier positif n'est ni démontrée ni exclue. Cette distinction doit être conservée dans le manuscrit.
+
+\section{Construction de la matrice augmentée}
+Chaque départ de corridor impair $u_j>1$ s'écrit
+\[u_j=2^{r_j}q_j-1,\quad q_j\text{ impair positif},\quad r_j=\vdeux(u_j+1).\]
+Les $r_j$ applications impaires sont suivies de $t_j\ge1$ applications paires. Le transfert exact est
+\begin{equation}\label{eq:transfer}
+\boxed{\displaystyle q_{j+1}=\frac{3^{r_j}q_j+2^{t_j}-1}{2^{t_j+r_{j+1}}}.}
+\end{equation}
+Écrivons $a_j=3^{r_j}$, $b_j=2^{t_j}-1$ et $d_j=2^{t_j+r_{j+1}}$. Nous composons les corridors, avec $A_0=D_0=1$, $C_0=0$ :
+\begin{equation}\label{eq:affine}
+\boxed{A_{j+1}=a_jA_j,\qquad D_{j+1}=d_jD_j,\qquad C_{j+1}=a_jC_j+b_jD_j.}
+\end{equation}
+Il en résulte $D_Kq_K=A_Kq_0+C_K$. Les contraintes de parité et de valuation à tous les rangs donnent la classe \emph{unique}
+\begin{equation}\label{eq:rho}
+\boxed{q_0\equiv \rho_K=(D_K-C_K)A_K^{-1}\pmod{M_K},\qquad M_K=2D_K.}
+\end{equation}
+Les classes sont emboîtées. Pour écarter $u_j=1$ avant le dernier corridor, on impose $q_j\ge3$ lorsque $r_j=1$ ; pour $r_j\ge2$, la condition $q_j\ge1$ suffit. Sur le préfixe avant le rang $K$, cela fournit une borne inférieure entière explicite $L_K$ sur $q_0$ :
+\[
+L_K=\max\left(1,\max_{\substack{0\le j<K\\r_j=1}}\left\lceil\frac{3D_j-C_j}{A_j}\right\rceil\right).
+\]
+Le plus petit représentant non terminal est donc
+\begin{equation}\label{eq:qmin}
+\boxed{q_{0,\min}(K)=\rho_K+M_K\max\!\left(0,\left\lceil\frac{L_K-\rho_K}{M_K}\right\rceil\right).}
+\end{equation}
+Cette formule et l'emboîtement des congruences rendent $q_{0,\min}(K)$ non décroissant avec $K$.
+
+\section{Certificat double : plancher de fidélité et plafond de non-descente}
+Notons $R_K=\sum_{j<K}r_j$, $T_K=\sum_{j<K}t_j$, et
+\[G_K=2^{R_K+T_K}-3^{R_K}.\]
+\begin{proposition}[Première descente et compensation cumulée]\label{prop:duale}
+Pour tout entier initial réalisant la chaîne, nous avons l'équivalence exacte
+\begin{equation}\label{eq:desc}
+\boxed{u_K<u_0\quad\Longleftrightarrow\quad G_Kq_0>C_K.}
+\end{equation}
+Définissons
+\begin{equation}\label{eq:cap}
+\boxed{Q_K=\min_{\substack{1\le j\le K\\G_j>0}}\left\lfloor\frac{C_j}{G_j}\right\rfloor,\qquad \min\varnothing=+\infty.}
+\end{equation}
+Alors un représentant initial $q_0$ n'a \emph{jamais} été inférieur à son départ lors des $K$ fins de corridors si et seulement si $q_0\le Q_K$.
+\end{proposition}
+\begin{proof}
+La composition \eqref{eq:affine} et les facteurs $2^{r_j}$ donnent
+\[u_K+1=2^{r_0}\frac{3^{R_K}q_0+C_K}{2^{R_K+T_K}},\qquad u_0+1=2^{r_0}q_0.\]
+La comparaison de ces deux quantités équivaut à \eqref{eq:desc}. Lorsque $G_j\le0$, aucune descente n'est possible au rang $j$ puisque $C_j>0$. Lorsque $G_j>0$, l'absence de descente équivaut à $q_0\le\lfloor C_j/G_j\rfloor$. L'intersection de ces contraintes donne \eqref{eq:cap}.
+\end{proof}
+Le certificat \emph{double} est ainsi
+\begin{equation}\label{eq:window}
+\boxed{q_{0,\min}(K)\le q_0\le Q_K\quad\text{pour tout départ sans descente.}}
+\end{equation}
+Le \textbf{plancher} est non décroissant, le \textbf{plafond} est non croissant. Dès que $q_{0,\min}(K)>Q_K$, \emph{tous} les représentants compatibles ont connu une première descente au plus tard à l'horizon $K$.
+
+\begin{corollaire}[Nombre exact des représentants non certifiés]
+Si $Q_K<\infty$, le nombre de représentants positifs compatibles avec les $K$ corridors et n'ayant encore connu aucune descente est
+\begin{equation}\label{eq:survivors}
+\boxed{N_K=\max\left(0,1+\left\lfloor\frac{Q_K-q_{0,\min}(K)}{M_K}\right\rfloor\right).}
+\end{equation}
+Si $Q_K=+\infty$, chacun des représentants de la classe évite une descente à ces fins de corridors.
+\end{corollaire}
+\emph{Remarque :} les états intermédiaires à l'intérieur d'un corridor peuvent varier ; l'expression « première descente » se réfère ici aux états \emph{impairs de fin de corridor}. Ce sont ceux utilisés dans la matrice. Les certificats n'affirment rien de plus sur l'intérieur du corridor.
+
+\section{Un adversaire au seuil exact : mot critique supérieur}
+Définissons
+\[\alpha=\log_2(3/2),\qquad\theta_*=\frac1\alpha-1\approx0{,}709511.\]
+Pour chaque $j\ge0$, posons
+\begin{equation}\label{eq:ceil}
+\boxed{b_j=\lceil(j+1)\theta_*\rceil-\lceil j\theta_*\rceil,\qquad r_j=1+b_j,\qquad t_j=1.}
+\end{equation}
+Ce mot commence par $r_j=2,2,2,1,2,2,1,2,2,2,1,\ldots$.
+\begin{theoreme}[Excursion critique, sans compensation multiplicative sur aucun préfixe]
+Le mot défini par \eqref{eq:ceil} est non ultimement périodique, ne comporte jamais plus de trois corridors consécutifs de type $(2,1)$ et vérifie, pour \emph{tout} $K\ge1$,
+\begin{equation}\label{eq:crit}
+\boxed{3^{R_K}>2^{R_K+T_K}.}
+\end{equation}
+En conséquence $Q_K=+\infty$ et tous les représentants de chaque préfixe fini satisfont $u_j>u_0$ aux $j$ premières fins de corridor. L'existence d'un \emph{même entier positif} réalisant le mot entier n'est \textbf{pas démontrée}.
+\end{theoreme}
+\begin{proof}
+Les valeurs $b_j$ sont $0$ ou $1$, avec somme télescopique $\sum_{j<K}b_j=\lceil K\theta_*\rceil$. D'où $R_K=K+\lceil K\theta_*\rceil$ et $T_K=K$. Puis
+\[
+\log_2\frac{3^{R_K}}{2^{R_K+T_K}}=\alpha\bigl(\lceil K\theta_*\rceil-K\theta_*\bigr)>0.
+\]
+L'inégalité est stricte car $\alpha$ et $\theta_*$ sont irrationnels : si $\alpha=p/q\in\mathbb Q$, on aurait $3^q=2^{p+q}$ ; impossible. Si le mot était ultimement périodique, sa proportion de $b_j=1$ serait rationnelle, alors qu'elle tend vers $\theta_*$, irrationnel. Dans n'importe quelle fenêtre de quatre indices, la somme des $b_j$ est au plus $\lceil4\theta_*\rceil=3$ ; ainsi aucun bloc de quatre valeurs consécutives $r_j=2$ n'existe. Enfin $G_K<0$ pour tout $K$ et $C_K>0$, donc \eqref{eq:desc} assure $u_K>u_0$ pour chaque représentant valide.
+\end{proof}
+Ce mot échappe à nos deux barrières antérieures : ses îlots expansifs n'ont pas une longueur croissante, et le produit initial des coefficients des $q_j$ ne tend pas vers zéro (il reste strictement supérieur à $1$, puisque $r_0=2$ et $r_K\le2$).
+
+Le \textbf{mot critique inférieur}, défini en remplaçant les plafonds de \eqref{eq:ceil} par des planchers, possède la \emph{même densité asymptotique} de corridors $(2,1)$ mais une propriété opposée : $3^{R_K}<2^{R_K+T_K}$ à tout $K\ge1$. Cette comparaison prouve qu'une fréquence asymptotique seule ne détermine pas l'état fini du déficit.
+
+\section{Audit de la matrice et expériences finies}
+Chaque paramètre $r_j,t_j,r_K$ a été énuméré dans $\{1,2,3\}$. Les comptes sont ceux de \emph{mots paramétrés}, non des probabilités de trajectoires.
+\begin{center}\small
+\begin{tabular}{rrrrr}
+\toprule
+$K$ & Motifs & Mixtes & Mixtes certifiés & Mixtes sans $G_j>0$\\\midrule
+1 & 27 & 0 & 0 & 0\\
+2 & 243 & 84 & 78 & 6\\
+3 & 2\,187 & 1\,134 & 1\,077 & 57\\
+4 & 19\,683 & 12\,432 & 12\,132 & 300\\
+5 & 177\,147 & 126\,630 & 124\,989 & 1\,641\\\bottomrule
+\end{tabular}
+\end{center}
+Dans ces bornes finies, aucun motif n'a laissé de représentant sans descente lorsqu'un préfixe contractant $G_j>0$ existait : ceci est une \textbf{observation de l'audit}, non une loi universelle démontrée.
+\begin{center}\includegraphics[width=.98\linewidth]{PhiPsi_v17_Cout_Initial_Mixte.png}\end{center}
+\begin{center}\includegraphics[width=.94\linewidth]{PhiPsi_v17_Marge_Critique.png}\end{center}
+\begin{center}\small
+\begin{tabular}{rrrrr}
+\toprule
+$K$ & Bits $q_{0,\min}$ critique sup. & Bits du module & Corridors exp. & Corridors contr.\\\midrule
+1&4&4&1&0\\
+4&11&12&3&1\\
+16&45&45&12&4\\
+64&175&175&46&18\\
+128&347&348&91&37\\
+256&695&695&182&74\\
+300&814&814&213&87\\\bottomrule
+\end{tabular}
+\end{center}
+À $K=300$, le plus petit représentant initial du mot critique supérieur comporte $814$ bits. Sa croissance expérimentale n'établit pas sa divergence lorsque $K\to\infty$.
+
+Le programme effectue également 250 essais aléatoires de mots compatibles, 12\,000 comparaisons indépendantes par énumération de petits représentants impairs, ainsi que des contrôles directs des transitions décimales de base $1000$.
+
+\section{Statut du problème et prochaine étape}
+\textbf{Ce qui est démontré ici :} les classes congruentielles exactes, le plancher $q_{0,\min}$, le plafond $Q_K$, leur monotonicité, le nombre de représentants sans première descente et la construction non périodique critique présentant $G_K<0$ pour tout $K$.
+
+\textbf{Ce qui ne l'est pas :} que tout mot infini non terminal possède $q_{0,\min}(K)\to+\infty$ ; que le mot critique supérieur n'est pas réalisable par un entier positif fixé ; que les autres cycles positifs ou les orbites divergentes sont impossibles.
+
+L'objectif d'une prochaine étude est de trouver un \emph{invariant global de croissance du coût initial} qui fonctionne même lorsque $Q_K=+\infty$, et qui respecte les retenues et restes $\Phi$--$\Psi$ ainsi que les tailles exactes des têtes.
+
+\textbf{Concordance avec les sources du manuscrit :} le critère de déficit reprend la section 9 et le corollaire 5.12 du complément multidimensionnel ; les congruences et leur fidélité s'inscrivent dans les sections 12, 15, 17 et 22. L'annexe conserve leurs conventions arithmétiques.
+\end{document}
