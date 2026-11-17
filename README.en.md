@@ -6,7 +6,7 @@
 
 *An elementary transformation. A complex dynamic. A mathematical architecture to explore.*
 
-**[🇫🇷 Français](README.md)  ·  [🇬🇧 English](README.en.md)  ·  [🇩🇪 Deutsch](README.de.md)  ·  [🇪🇸 Español](README.es.md)  ·  [🇮🇱 עברית](README.he.md)  ·  [🇯🇵 日本語](README.ja.md)  ·  [🇨🇳 简体中文](README.zh-CN.md)**
+**[🇫🇷 Français](README.md)  ·  [🇬🇧 English](README.en.md)  ·  [🇩🇪 Deutsch](README.de.md)  ·  [🇪🇸 Español](README.es.md)  ·  [🇮🇱 עברית](README.he.md)  ·  [🇯🇵 日本語](README.ja.md)  ·  [🇨🇳 简体中文](README.zh-CN.md)  ·  [🇮🇳 हिन्दी](README.hi.md)  ·  [🇮🇹 Italiano](README.it.md)  ·  [🇬🇪 ქართული](README.ka.md)**
 
 ---
 
@@ -165,6 +165,9 @@ Syracuse/
 ├── README.he.md
 ├── README.ja.md
 ├── README.zh-CN.md
+├── README.hi.md
+├── README.it.md
+├── README.ka.md
 ├── mecanique_syracuse.pdf
 ├── Syracuse_PhiPsi_Complement_v6_et_Annexe_v17.pdf
 ├── Syracuse_PhiPsi_v17_Excursions_Mixtes_Atlas/
