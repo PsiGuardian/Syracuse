@@ -1,0 +1,201 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry,graphicx,booktabs,array,enumitem,xcolor,hyperref,microtype,fancyhdr}
+\geometry{left=24mm,right=24mm,top=25mm,bottom=25mm}
+\definecolor{ink}{HTML}{1A2635}
+\definecolor{teal}{HTML}{116E74}
+\hypersetup{colorlinks=true,urlcolor=teal,linkcolor=teal,pdftitle={Syracuse Phi-Psi - Deux barrieres pour mots non periodiques}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{6pt}
+\setlist[itemize]{leftmargin=15pt,topsep=3pt,itemsep=2pt}
+\pagestyle{fancy}\fancyhf{}\lhead{\small\textcolor{teal}{Recherche $\Phi$--$\Psi$}}\rhead{\small Annexe v16}\cfoot{\thepage}
+\newtheorem{theoreme}{Théorème}[section]
+\newtheorem{lemme}[theoreme]{Lemme}
+\newtheorem{corollaire}[theoreme]{Corollaire}
+\newtheorem{proposition}[theoreme]{Proposition}
+\newcommand{\vdeux}{\nu_2}
+\newcommand{\Zpos}{\mathbb Z_{>0}}
+\begin{document}
+\begin{center}
+{\small\sffamily\color{teal} SYRACUSE / MÉCANIQUE DES CORRIDORS / RECHERCHE EXACTE}\par\vspace{5pt}
+{\huge\bfseries Deux barrières pour les\\réarmements non périodiques}\par\vspace{8pt}
+{\large Prolongement fidèle $\Phi$--$\Psi$ et coût dyadique de l'entier initial}\par\vspace{10pt}
+{\small Note de recherche autonome --- 16 novembre 2026 --- Version 16}
+\end{center}
+\vspace{5pt}
+\noindent\colorbox{teal!7}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\textbf{Portée du résultat.} Deux classes explicites de mots de réarmements \emph{non ultimement périodiques} sont exclues comme trajectoires infinies d'un même entier positif. Tous leurs préfixes finis demeurent réalisables. Ceci \textbf{ne constitue pas une démonstration de la conjecture de Syracuse}.}}\par
+\tableofcontents
+\section{Rappel exact : corridors et fidélité des frontières}
+On utilise la transformation accélérée
+\[
+U(n)=\begin{cases}(3n+1)/2,&n\text{ impair},\\n/2,&n\text{ pair}.\end{cases}
+\]
+Chaque début de corridor impair s'écrit $u_j=2^{r_j}q_j-1$ avec $q_j\ge1$ impair et $r_j=\nu_2(u_j+1)\ge1$. Après $r_j$ portes impaires et $t_j\ge1$ portes paires, on atteint le prochain début impair. La loi de transfert est
+\begin{equation}\label{eq:transfert}
+\boxed{\displaystyle q_{j+1}=\frac{3^{r_j}q_j+2^{t_j}-1}{2^{t_j+r_{j+1}}}.}
+\end{equation}
+Un mot de $K$ corridors est $w_K=(r_0,t_0,\dots,r_{K-1},t_{K-1},r_K)$. Il est \emph{réalisable non terminalement} si tous les $q_j$ sont impairs positifs et $u_j>1$ pour $0\le j<K$. L'état final $u_K=1$ est autorisé pour un mot fini.
+
+\begin{proposition}[Relèvement exact des classes initiales]\label{prop:classe}
+Posons $A_0=D_0=1$ et $C_0=0$. Pour chaque corridor, avec $a_j=3^{r_j}$, $b_j=2^{t_j}-1$ et $d_j=2^{t_j+r_{j+1}}$, définissons
+\[
+A_{j+1}=a_jA_j,\quad D_{j+1}=d_jD_j,\quad C_{j+1}=a_jC_j+b_jD_j.
+\]
+Alors $D_Kq_K=A_Kq_0+C_K$. La condition que les $q_j$ soient impairs entiers détermine exactement la classe
+\begin{equation}\label{eq:rho}
+\boxed{\displaystyle q_0\equiv\rho_K=(D_K-C_K)A_K^{-1}\pmod{2D_K}.}
+\end{equation}
+Tous les préfixes sont emboîtés. Le plus petit représentant compatible qui n'atteint pas $1$ avant le dernier corridor, noté $q_{0,\min}(K)$, est non décroissant en $K$.
+\end{proposition}
+\begin{proof}
+L'identité affine se démontre par récurrence. Le coefficient $A_K$ est impair et $D_K$ est une puissance de $2$. La congruence $A_Kq_0+C_K\equiv D_K\pmod{2D_K}$ équivaut exactement à la condition que $q_K$ soit impair. En remontant successivement les congruences, l'inversibilité de tous les facteurs $3^{r_j}$ modulo les puissances de $2$ impose l'intégralité impaire de chacun des $q_j$ antérieurs. Les contraintes $u_j>1$ éliminent uniquement les premiers représentants ayant atteint le cycle terminal trop tôt. Toute extension conserve les conditions précédentes.
+\end{proof}
+\textbf{Précaution.} Que $q_{0,\min}(K)$ croisse dans un calcul fini ne suffit jamais à démontrer qu'il divergera. Il faut une borne valable pour tous les horizons.
+
+\section{Théorème des îlots expansifs non périodiques}
+\begin{lemme}[Barrière dyadique exacte d'un îlot]\label{lem:ilot}
+Considérons $L\ge1$ corridors successifs $(r,t)=(2,1)$, dont le dernier est suivi d'un corridor ayant $r_{\mathrm{suivant}}=1$. Si $q_{\mathrm{début}}$ est le paramètre à l'entrée de l'îlot, alors
+\begin{equation}\label{eq:valuation}
+\boxed{\nu_2(q_{\mathrm{début}}+1)=3L-1.}
+\end{equation}
+En particulier $q_{\mathrm{début}}+1\ge2^{3L-1}$.
+\end{lemme}
+\begin{proof}
+Au sein de l'îlot, lorsque le corridor suivant commence aussi avec $r=2$, la relation \eqref{eq:transfert} se réduit à $q_{i+1}+1=\frac98(q_i+1)$. Pour le dernier corridor, qui aboutit à $r=1$, la relation est $q_{\mathrm{fin}}=(9q_{\mathrm{avant}}+1)/4$. Après composition,
+\[
+q_{\mathrm{fin}}=\frac{9^L(q_{\mathrm{début}}+1)-8^L}{2^{3L-1}}.
+\]
+Puisque $q_{\mathrm{fin}}$ est impair, le numérateur possède exactement $3L-1$ facteurs $2$. Or $8^L$ est divisible par $2^{3L}$ et $9^L$ est impair ; la valuation de $q_{\mathrm{début}}+1$ vaut donc exactement $3L-1$.
+\end{proof}
+\begin{theoreme}[Impossibilité d'une suite explicite non périodique]\label{thm:iles}
+Considérons le mot infini
+\begin{equation}\label{eq:motile}
+\boxed{\displaystyle W=(2,1)^{1},(1,1),(2,1)^{2},(1,1),(2,1)^{4},(1,1),(2,1)^{8},\ldots.}
+\end{equation}
+Tous ses préfixes finis sont réalisables par des entiers positifs, mais \emph{aucun même entier positif} ne réalise tout $W$. De plus, si le préfixe inclut le $m$-ième îlot de longueur $L=2^m$, son représentant initial satisfait
+\begin{equation}\label{eq:boundile}
+\boxed{\displaystyle q_0+1\ge2^{3L-1}\left(\frac49\right)^{L-1+m}.}
+\end{equation}
+Cette borne diverge avec $m$ ; en particulier $q_{0,\min}(K)\to+\infty$ le long des préfixes, et donc pour l'ensemble de leurs horizons.
+\end{theoreme}
+\begin{proof}
+Le $m$-ième îlot débute à l'indice $j_m=2^m-1+m$ et possède $L_m=2^m$ corridors. Dans tout le mot, $r_j\in\{1,2\}$ et $t_j=1$, d'où
+\[
+q_{j+1}=\frac{3^{r_j}q_j+1}{2^{1+r_{j+1}}}
+\le\frac{9q_j+1}{4},\qquad
+q_{j+1}+1\le\frac94(q_j+1).
+\]
+Ainsi $q_{j_m}+1\le(9/4)^{j_m}(q_0+1)$. Le lemme \ref{lem:ilot} impose simultanément $q_{j_m}+1\ge 2^{3L_m-1}$, ce qui démontre \eqref{eq:boundile}. Donc
+\[
+\log_2(q_0+1)\ge\bigl(3-\log_2(9/4)\bigr)2^m
+-(m-1)\log_2(9/4)-1\xrightarrow[m\to\infty]{}+\infty.
+\]
+Comme $3-\log_2(9/4)>0$, aucun $q_0$ fixé ne peut satisfaire tous les préfixes. Chacun des préfixes finis est néanmoins représenté par sa classe \eqref{eq:rho}. Le mot n'est pas ultimement périodique car les séparateurs $(1,1)$ apparaissent à des distances non bornées.
+\end{proof}
+\subsection{Audit exhaustif des représentants de préfixes}
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule
+Longueur d'îlot $L$ & Horizons $K$ & Bits de $q_{0,\min}$ & Bits du module\\\midrule
+1&1&2&3\\
+2&4&10&11\\
+4&9&24&25\\
+8&18&50&51\\
+16&35&94&101\\
+32&68&199&199\\
+64&133&391&393\\
+128&262&779&779\\
+256&519&1549&1549\\\bottomrule
+\end{tabular}
+\end{center}
+\textit{Les valeurs en bits du module sont également consignées dans le CSV vérifié. Les horizons possèdent chacun un témoin entier exact.}
+\begin{center}
+\includegraphics[width=.98\linewidth]{Syracuse_PhiPsi_v16_Cout_Initial.png}
+\end{center}
+
+\section{Barrière contractante pour les mots non périodiques}
+\begin{theoreme}[Critère général de contraction uniforme]\label{thm:contract}
+Soit un mot infini de corridors $(r_j,t_j)$ avec $1\le r_j\le R$ pour une constante $R$. Posons
+\[
+\lambda_j=\frac{3^{r_j}}{2^{t_j+r_{j+1}}},\qquad
+\beta_j=\frac{2^{t_j}-1}{2^{t_j+r_{j+1}}}<\frac12.
+\]
+Supposons qu'il existe $C\ge1$ et $0<\theta<1$ tels que, pour tout intervalle d'indices et toute longueur $\ell$,
+\begin{equation}\label{eq:uniform}
+\boxed{\prod_{j=h}^{h+\ell-1}\lambda_j\le C\theta^{\ell}.}
+\end{equation}
+Si le mot n'est \emph{pas ultimement périodique}, aucun entier positif fixe ne peut en réaliser tous les corridors non terminaux. Par conséquent ses représentants initiaux minimaux divergent.
+\end{theoreme}
+\begin{proof}
+En itérant $q_{j+1}=\lambda_jq_j+\beta_j$, on obtient
+\[
+q_K=\left(\prod_{j=0}^{K-1}\lambda_j\right)q_0
++\sum_{h=0}^{K-1}\beta_h\prod_{j=h+1}^{K-1}\lambda_j.
+\]
+La condition \eqref{eq:uniform} donne
+\[
+0<q_K\le C\theta^Kq_0+\frac C2\sum_{\ell=0}^{K-1}\theta^\ell
+\le Cq_0+\frac{C}{2(1-\theta)}.
+\]
+Si un entier positif réalisait tous les corridors, les $q_K$ seraient des entiers impairs uniformément bornés, ainsi que $u_K=2^{r_K}q_K-1\le 2^R q_K-1$. Une trajectoire déterministe sur un ensemble fini de valeurs finit nécessairement par répéter un état, rendant sa suite de corridors ultimement périodique. Contradiction. Enfin, des classes de préfixes emboîtées dont les représentants minimaux seraient bornés se stabiliseraient sur un même entier positif, ce qui est impossible.
+\end{proof}
+\subsection{Une classe de mots à faible densité d'expansions}
+Dans le cas $t_j=1$ et $r_j\in\{1,2\}$, notons $\vartheta$ une borne sur la proportion de corridors avec $r=2$ sur \emph{tous} les intervalles, à une erreur additive bornée près. Plus précisément, si
+\[
+\#\{j\in[h,h+\ell):r_j=2\}\le\vartheta\ell+B,
+\]
+on vérifie par télescopage
+\[
+\log_2\prod_{j=h}^{h+\ell-1}\lambda_j
+=\log_2(3/2)\sum_{j=h}^{h+\ell-1}r_j-\ell-(r_{h+\ell}-r_h).
+\]
+La contraction uniforme suit dès que
+\begin{equation}\label{eq:theta}
+\boxed{\displaystyle \vartheta<\vartheta_*=\frac1{\log_2(3/2)}-1\approx0{,}709511.}
+\end{equation}
+La constante d'erreur $B$ et le terme de bord $r_{h+\ell}-r_h$ sont absorbés dans le facteur $C$. Ce critère n'affirme rien au seuil ou au-delà.
+\begin{center}\includegraphics[width=.95\linewidth]{Syracuse_PhiPsi_v16_Seuil_Dyadique.png}\end{center}
+
+\section{Un mot non périodique exclu par contraction : Thue--Morse}
+\begin{theoreme}[Impossibilité d'une trajectoire de profil Thue--Morse]\label{thm:thue}
+Définissons $s_j\in\{0,1\}$ comme la parité du nombre de chiffres $1$ dans l'écriture binaire de $j$, puis $r_j=2-s_j$ et $t_j=1$ pour tout $j\ge0$. Alors ce mot infini de corridors est réalisable à tout horizon fini, mais n'est réalisable indéfiniment par aucun entier positif fixé.
+\end{theoreme}
+\begin{proof}
+Les identités $s_{2j}=s_j$ et $s_{2j+1}=1-s_j$ montrent que les deux corridors de chaque paire $(2j,2j+1)$ sont de stocks respectifs $1$ et $2$. Tout intervalle de longueur $\ell$ vérifie donc $\sum r_j\le\frac32\ell+1$. En utilisant le télescopage de la section précédente, et $|r_{h+\ell}-r_h|\le1$,
+\[
+\prod_{j=h}^{h+\ell-1}\lambda_j\le
+3\,2^{-\delta\ell},\qquad
+\delta=\frac52-\frac32\log_2 3>0,
+\]
+car $27<32$. Le théorème \ref{thm:contract} s'applique avec $C=3$, $\theta=2^{-\delta}\approx0{,}918559$ ; en particulier
+\[
+q_K\le3q_0+\frac{3/4}{1-2^{-\delta}}<3q_0+9{,}21.
+\]
+Il reste à vérifier que $s_j$ n'est pas ultimement périodique. Si une période éventuelle était paire, l'égalité $s_{2j+2d}=s_{2j}$ ramènerait cette période à sa moitié $d$, donc on pourrait supposer une période impaire $p=2d+1$. La périodicité aux indices $2j$ et $2j+1$ donnerait pour tout $j$ assez grand, respectivement,
+\[
+s_{j+d}=1-s_j,\qquad s_{j+d+1}=1-s_j.
+\]
+Le mot serait finalement constant, contradiction avec $s_{2j}\ne s_{2j+1}$. Le mot est donc non ultimement périodique, et le théorème général conclut.
+\end{proof}
+
+\section{Vérifications, limites et prochaine cible}
+\textbf{Audits effectués.} Le moteur Python recalcule les congruences et les témoins, puis vérifie directement les valuations et les transferts. La campagne comprend 400 mots aléatoires, $20\,560$ comparaisons indépendantes avec une énumération d'entiers impairs sur de petits horizons, 120 reconstructions indépendantes en blocs décimaux $\Phi$--$\Psi$, et les îlots jusqu'à $L=256$. La famille Thue--Morse est étudiée numériquement jusqu'à $K=512$ ; le mot de Fibonacci (substitution $0\mapsto01$, $1\mapsto0$) sert de contrôle numérique distinct, sans nouvelle affirmation théorique sur lui.
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule
+$K$ & Îlots (bits, horizons choisis) & Thue--Morse (bits) & Fibonacci (bits)\\\midrule
+32 & --- &80&85\\
+64 & --- &159&167\\
+128 & --- &319&336\\
+256 & --- &640&671\\
+512 & --- &1280&1341\\\bottomrule
+\end{tabular}
+\end{center}
+\textbf{Deux régions désormais démontrées.} D'une part, les îlots expansifs suffisamment longs par rapport à leur position imposent une fuite du coût initial. D'autre part, les mots non périodiques dont tous les produits de transfert sont uniformément contractants sont exclus par bornitude.
+
+\textbf{Frontière ouverte.} Ces conditions sont suffisantes, non exhaustives. Elles ne traitent pas en général les mots où alternent excursions expansives et contractantes avec des longueurs irrégulières, ni les suites proches du seuil de dérive $\vartheta_*$. La propriété universelle $q_{0,\min}(K)\to\infty$ pour \emph{toute} suite infinie non terminale demeure une reformulation de la conjecture et non un résultat acquis.
+
+\textbf{Reproductibilité.} Le fichier \texttt{syracuse\_phi\_psi\_nonperiodique\_v16.py} fonctionne en Python 3 standard, accepte un nombre arbitraire de corridors à chaque horizon fini, et exporte les trois tableaux CSV ainsi qu'un bilan JSON. Les calculs de fidélité reposent exclusivement sur des entiers exacts.
+\end{document}

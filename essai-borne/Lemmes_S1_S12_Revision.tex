@@ -1,0 +1,168 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm,geometry,hyperref}
+\geometry{margin=2.4cm}
+\newtheorem{lemma}{Lemme}
+\newtheorem{theorem}{Théorème}
+\newtheorem{remark}{Remarque}
+\title{Syracuse $\Phi$--$\Psi$ : composition des mots de création de tête}
+\date{17 novembre 2026}
+\begin{document}\maketitle
+On prend l'opérateur classique $C$, $I(n)=3n+1$ sur les impairs et $P(n)=n/2$ sur les pairs. Une création de tête au niveau $L$ est le premier franchissement de $10^L$. Les mots finissent par $I$ et codent des préfixes finis. On ne suppose pas la convergence universelle.
+\begin{lemma}[S1 : composition affine]
+À chaque mot admissible $w$ comportant $p_w$ lettres $I$ et $q_w$ lettres $P$ correspond $B_w\in\mathbb N_0$ tel que $T_w(x)=(3^{p_w}x+B_w)/2^{q_w}$. Pour deux mots successifs $w,v$ :
+\[
+T_{wv}(x)=\frac{3^{p_w+p_v}x+3^{p_v}B_w+2^{q_w}B_v}{2^{q_w+q_v}}.
+\]
+\end{lemma}
+\begin{proof}Composition immédiate des deux transformations affines, par substitution. La constante s'obtient en initialisant $B=0$ et $q=0$, puis en appliquant $B\leftarrow3B+2^q$ pour $I$, et $q\leftarrow q+1$ pour $P$.\end{proof}
+\begin{lemma}[S2 : congruence dyadique]
+Soit $w$ admissible finissant par $I$, et $Q$ son nombre de lettres $P$. Soit $w^-$ le mot privé du $I$ terminal, et $T_{w^-}(x)=(Ax+B)/2^Q$ avec $A$ impair. L'ensemble des départs entiers réalisant les décisions de parité de $w$ est la classe
+\[
+x\equiv(2^Q-B)A^{-1}\pmod{2^{Q+1}}.
+\]
+\end{lemma}
+\begin{proof}Le dernier argument du $I$ doit être impair, donc $Ax+B\equiv2^Q\pmod{2^{Q+1}}$. $A=3^{p(w^-)}$ est inversible modulo $2^{Q+1}$. La congruence obtenue impose inductivement l'intégralité et les parités intermédiaires : en parcourant le mot de droite à gauche, chaque $P$ double l'état, tandis que chaque $I$ admet pour inverse $(z-1)/3$ sur la classe requise.\end{proof}
+\begin{lemma}[S3 : raccord de réarmement]
+Si $w$ crée une tête par l'opération finale $3u+1$, l'état de jonction $y=3u+1$ est pair. La transition suivante est $P$ et, jusqu'à la prochaine opération $I$, le nombre de divisions est exactement $a=\nu_2(y)$. Ainsi, pour des mots consécutifs $w,v$, le mot $v$ commence par $P^a$.
+\end{lemma}
+\begin{proof}Le résultat de toute opération $I$ est pair, et le nombre de divisions successives jusqu'au prochain entier impair vaut sa valuation $2$-adique.\end{proof}
+\begin{theorem}[S4 : fenêtre exacte pour une chaîne finie de créations]
+Soit une chaîne de $k$ mots $w_0,\ldots,w_{k-1}$, avec mot concaténé $W$ se terminant par $I$. On fixe la longueur décimale initiale $L$. Pour chaque préfixe de longueur $h$ de $W$, on note $T_h(x)=(A_hx+B_h)/D_h$ avec $A_h=3^{p_h}$ et $D_h=2^{q_h}$. Pour l'étape $i$ ($0\le i<k$), soit $J_i$ l'ensemble des indices correspondant aux préfixes strictement antérieurs au dernier caractère de $w_i$, et $h_i$ l'indice final de ce mot dans $W$. Posons $F_i=10^{L+i}$. Alors l'ensemble des états initiaux de longueur $L$ réalisant ces $k$ premières créations successives, sous le mot $W$, est exactement l'intersection d'une classe $x\equiv r_W\pmod{2^{q_W+1}}$ avec $[A,B]\cap\mathbb Z$, où
+\[
+ A=\max\left(10^{L-1},\max_i\left\lceil\frac{D_{h_i}F_i-B_{h_i}}{A_{h_i}}\right\rceil\right),
+\]
+\[
+ B=\min\left(10^L-1,\min_i\min_{h\in J_i}\left\lfloor\frac{D_hF_i-1-B_h}{A_h}\right\rfloor\right).
+\]
+Le nombre de candidats vaut
+\[
+\max\left(0,\left\lfloor\frac{B-r_W}{2^{q_W+1}}\right\rfloor-\left\lceil\frac{A-r_W}{2^{q_W+1}}\right\rceil+1\right).
+\]
+\end{theorem}
+\begin{proof}À l'intérieur de l'étape $i$, chaque valeur précédant le dernier caractère est strictement inférieure à $F_i$, tandis que la valeur finale lui est supérieure ou égale. Les transformations $T_h$ sont des fonctions affines croissantes sur les entiers admissibles, donc toutes ces inégalités déterminent un intervalle entier. La classe unique de parité de $W$ est donnée par S2. La dernière expression compte les éléments d'une progression arithmétique dans cet intervalle.\end{proof}
+\begin{theorem}[S5 : stabilisation des fenêtres à mots finis fixés]
+Sous les hypothèses de S4, la chaîne de mots et $k$ restent fixes, tandis que $L\to\infty$. Écrivons $g_h=A_h/D_h$, $z=x/10^L$ et
+\[
+\alpha=\max\left(\frac1{10},\max_i\frac{10^i}{g_{h_i}}\right),\qquad
+\beta=\min\left(1,\min_i\min_{h\in J_i}\frac{10^i}{g_h}\right).
+\]
+Si $\alpha<\beta$, le nombre de départs entiers de longueur $L$ réalisant exactement cette chaîne vérifie
+\[
+C_W(L)=\frac{\beta-\alpha}{2^{q_W+1}}\,10^L+O_W(1).
+\]
+Si $\alpha>\beta$, la famille est vide pour tout $L$ assez grand. Dans le cas limite $\alpha=\beta$, l'asymptotique se réduit à $O_W(1)$ et exige une analyse des termes additifs.
+\end{theorem}
+\begin{proof}Chacune des bornes de S4 a la forme $c\cdot10^L+O_W(1)$, les coefficients $c$ venant des rapports de puissance $10^i/g_h$, et les constantes $B_h$ restant fixes. Les deux extrémités de l'intervalle entier sont donc $\alpha 10^L+O_W(1)$ et $\beta 10^L+O_W(1)$. Une classe modulo $2^{q_W+1}$ contient $((\beta-\alpha)10^L)/2^{q_W+1}+O_W(1)$ entiers dans cet intervalle dès que $\alpha<\beta$.\end{proof}
+\begin{remark}Ces résultats portent sur des chaînes finies de créations. Le passage à une chaîne infinie pour \emph{un entier initial fixé} n'est pas justifié par la seule existence de familles admissibles pour toutes les longueurs. Une union de préfixes compatibles au sens $2$-adique n'est pas nécessairement l'orbite d'un entier positif.\end{remark}
+
+\begin{theorem}[S6 : aperiodicité nécessaire des mots de records infinis]
+Si une trajectoire entière positive atteint des longueurs décimales arbitrairement grandes, alors la suite de ses mots successifs de \emph{première création de tête} ne peut être ultimement périodique.
+\end{theorem}
+\begin{proof}
+Soient $y_j$ les valeurs aux premières créations de longueurs successives $L_j=L_0+j$, pour $j$ suffisamment grand. Le lemme des portes décimales postérieures à la première opération assure
+\[
+1\le z_j:=y_j/10^{L_j-1}<\tfrac32+10^{-(L_j-1)}.
+\]
+Supposons qu'à partir d'un certain rang le motif de $k$ mots se répète à l'identique. Sa transformation composée est $y\mapsto gy+b$ avec $g=3^P/2^Q>0$ et $b\ge0$, $P\ge1$. Après chaque période de $k$ créations de nouvelles longueurs,
+\[
+z_{j+k}=\rho z_j+\frac{b}{10^{L_j+k-1}},\qquad \rho=\frac{g}{10^k}.
+\]
+Si $\rho>1$, l'inégalité $z_{j+k}\ge\rho z_j$ rend la sous-suite non bornée, contradiction. Si $\rho<1$, l'équation linéaire avec un terme perturbateur tendant vers zéro implique $z_{j+mk}\to0$, en contradiction avec $z_{j+mk}\ge1$. Enfin $\rho=1$ imposerait $3^P=2^{Q+k}5^k$, impossible puisque $k\ge1$. Ainsi aucun motif de mots de records non vide ne peut se répéter indéfiniment.\end{proof}
+\begin{lemma}[S7 : trois repetitions W5 sont realisables, quatre sont impossibles]
+Posons $W_5=P(IP)^5I$ et $g=729/64$. Une chaîne de trois premières créations successives suivant $W_5^3$ est réalisable, par exemple à partir de $x=1\,000\,341\,502$ ; les valeurs aux trois records sont
+\[
+11\,394\,514\,942,\quad129\,790\,646\,782,\quad1\,478\,396\,586\,022.
+\]
+En revanche aucune chaîne de quatre premières créations successives ne peut suivre $W_5^4$, quelle que soit la longueur du départ.
+\end{lemma}
+\begin{proof}L'application de $W_5$ s'écrit $T(x)=g(x+2)-2$, donc $T^4(x)=g^4(x+2)-2$. Pour un départ de $L$ chiffres, $x\ge10^{L-1}$ et donc $T^4(x)>g^4 10^{L-1}-2$. Or $(g/10)^4>(3/2)$, donc $T^4(x)>(3/2)10^{L+3}+1$ pour $L\ge1$. Une quatrième première création en dernière opération de $W_5$ devrait au contraire donner $T^4(x)<(3/2)10^{L+3}+1$, d'après la porte décimale tardive. Contradiction. L'existence du triplet cité se vérifie directement par l'algorithme exact des fenêtres et le mot de parité correspondant.\end{proof}
+\begin{remark}La non-périodicité concerne la suite des \emph{mots de création de tête}, sous l'hypothèse d'une infinité de nouvelles longueurs. Elle ne démontre pas que les trajectoires positives convergent, et elle ne prédit pas à elle seule le mot suivant.\end{remark}
+
+
+\begin{theorem}[S8 : complétude des 25 raccordements de portes à grande longueur]
+Notons $\mathcal P=\{(3,1),(3,2),(4,0),(4,1),(4,2)\}$ les cinq signatures locales de première création de tête après la première opération, où le premier nombre est le chiffre de tête de la source et le second la retenue entrante en cette position. Pour chaque paire ordonnée $(p,p')\in\mathcal P^2$, il existe une paire fixée de mots de première création successifs $w,v$ et un entier $L_0(p,p')$ tels que, pour toute longueur décimale initiale $L\ge L_0(p,p')$, au moins un départ de longueur $L$ réalise successivement ces deux mots avec les portes $(p,p')$. 
+\end{theorem}
+\begin{proof}Le calcul exact joint fournit pour les 25 paires de portes un couple témoin $w,v$ observé sur une trajectoire record, et un intervalle normalisé de valeurs initiales $\alpha_{p,p'}<x/10^L<\beta_{p,p'}$ de largeur strictement positive pour lequel les mots, les deux premières créations, et les deux signatures de porte sont satisfaits dans la limite $L\to\infty$. Les bornes sur les chiffres de tête et leurs retenues sont des inégalités entières affines supplémentaires, car pour une source $u=d10^{K-1}+t$ la retenue en tête vaut $c=\lfloor(3t+1)/10^{K-1}\rfloor$. L'argument de S5, appliqué à ces contraintes, donne un nombre de départs de la classe congruentielle qui croît comme $(\beta-\alpha)10^L/2^{Q+1}+O(1)$ ; il est donc strictement positif pour tout $L$ assez grand. Comme $\mathcal P^2$ est fini, un même seuil $L_0$ peut être choisi par maximum. Les intervalles rationnels et mots témoins sont consignés dans \texttt{25\_jonctions\_portes\_fideles.csv}.\end{proof}
+\begin{remark}La complétude locale de $\mathcal P^2$ ne signifie pas que toute suite infinie de portes est réalisable par un entier positif fixé. Les contraintes globales des mots, congruences et frontières doivent être vérifiées pour les chaînes entières.\end{remark}
+
+
+
+\section*{Compléments vérifiés avant l'étude des triplets et quadruplets}
+Les résultats S9--S12 complètent S1--S8 sans en modifier les hypothèses. Ils distinguent l'état décimal, le mot temporel, les frontières et les effectifs de classes. Dans S10, \emph{éventuellement périodique} signifie périodique au-delà d'une longueur finie.
+
+\begin{lemma}[S9 : transport exact de la différence par un mot composé]
+Soient $x<y$ deux entiers positifs réalisant exactement le même mot classique admissible $w$, comportant $p$ opérations impaires et $q$ divisions par $2$. Alors
+\[
+T_w(y)-T_w(x)=\frac{3^p(y-x)}{2^q},\qquad
+\nu_2(T_w(y)-T_w(x))=\nu_2(y-x)-q,
+\]
+et
+\[
+\nu_5(T_w(y)-T_w(x))=\nu_5(y-x).
+\]
+En particulier, si $y=x+a10^L$ avec $1\le a\le9$, le nombre exact de chiffres terminaux égaux des deux états finaux (c'est-à-dire $\nu_{10}(T_w(y)-T_w(x))$) est
+\[
+\boxed{\min\bigl(L+\nu_2(a)-q,\ L+\nu_5(a)\bigr).}
+\]
+Le fait que les deux états finaux soient entiers entraîne $q\le L+\nu_2(a)$. Cette formule reste valable pour une concaténation finie quelconque de mots, en remplaçant $p,q$ par les totaux de la concaténation.
+\end{lemma}
+\begin{proof}Par S1, les deux images ont le même coefficient affine $3^p/2^q$ et le même terme additif : leur soustraction élimine ce dernier. Les valuations suivent car $3$ est premier à $2$ et à $5$, et $2$ est premier à $5$. Le nombre de chiffres terminaux égaux de deux entiers distincts est la valuation en base $10$ de leur différence, égale au minimum des valuations en $2$ et $5$.\end{proof}
+
+\begin{theorem}[S10 : correction éventuellement périodique lors du passage $L\to L+1$]
+Soit $W$ une chaîne \emph{fixée} et finie de mots de premières créations de longueur, avec $p$ lettres $I$, $Q$ lettres $P$, et fenêtre normalisée strictement positive $\alpha_W<\beta_W$ au sens de S5. Soit $C_W(L)$ le nombre de départs de longueur exactement $L$ qui la réalisent. Alors il existe un entier $L_0$, un rationnel
+\[
+c_W=\frac{\beta_W-\alpha_W}{2^{Q+1}}>0
+\]
+et une fonction $e_W:\{L\ge L_0\}\to\mathbb Q$, \emph{bornée et périodique}, tels que
+\[
+\boxed{C_W(L)=c_W10^L+e_W(L)\quad(L\ge L_0).}
+\]
+Une période possible de $e_W$ divise $3^{\max(0,p-2)}$. En particulier,
+\[
+\boxed{C_W(L+1)=10C_W(L)+O_W(1),}
+\]
+avec une différence $C_W(L+1)-10C_W(L)$ elle-même éventuellement périodique.
+\end{theorem}
+\begin{proof}
+Dans la formule de S4, chaque borne entière est un minimum ou maximum fini de quantités de la forme
+\[\left\lceil\frac{2^{q_h}10^{L+i}-B_h}{3^{p_h}}\right\rceil,
+\qquad\left\lfloor\frac{2^{q_h}10^{L+i}-1-B_h}{3^{p_h}}\right\rfloor,
+\qquad10^{L-1},\ 10^L-1.
+\]
+Pour $L$ assez grand, les termes dominants sélectionnés par chaque minimum ou maximum sont ceux de pente extrémale (en cas d'égalité des pentes, les constantes choisissent un terme), et les fractions résiduelles des arrondis sont périodiques avec $L$ modulo l'ordre de $10$ dans $(\mathbb Z/3^{p_h}\mathbb Z)^\times$. Ensuite, le dénombrement d'une classe fixe modulo $2^{Q+1}$ est obtenu par deux autres arrondis. La partie de $10^L$ modulo $2^{Q+1}$ est nulle pour $L$ assez grand ; la partie modulo une puissance de $3$ est périodique. Le terme restant après extraction de $c_W10^L$ est donc borné et périodique pour $L$ grand. L'ordre de $10$ modulo $3^p$ divise $3^{\max(0,p-2)}$, puisque $10=1+9$ et par relèvement des exposants. Enfin, la relation entre les effectifs aux longueurs consécutives résulte par soustraction.
+\end{proof}
+
+\begin{lemma}[S11 : transfert affine exact des mantisses de records]
+Soient $y_j$ et $y_{j+1}$ deux premières créations successives de longueur dans une même trajectoire classique, avec $\ell(y_j)=d_j$ et $\ell(y_{j+1})=d_j+1$. Supposons que le mot complet qui les relie soit $w$, d'opérateur $T_w(z)=g_wz+b_w$ ($g_w=3^p/2^q$, $b_w\ge0$). Posons
+\[z_j=\frac{y_j}{10^{d_j-1}},\qquad z_{j+1}=\frac{y_{j+1}}{10^{d_j}}.\]
+Alors
+\[
+\boxed{z_{j+1}=\frac{g_w}{10}z_j+\frac{b_w}{10^{d_j}}.}
+\]
+Pour une première création de longueur survenant après la première opération de la trajectoire, la mantisse de l'état record satisfait
+\[
+\boxed{1\le z_j<\frac32+10^{-(d_j-1)}.}
+\]
+\end{lemma}
+\begin{proof}
+On substitue $y_j=10^{d_j-1}z_j$ dans $y_{j+1}=g_wy_j+b_w$ et on divise par $10^{d_j}$. L'encadrement utilise le fait que toute nouvelle création postérieure à la première opération est précédée d'une division par $2$ à partir d'un état pair de longueur au plus $d_j-1$. Si $u$ est l'impair source, alors $2u<10^{d_j-1}$ et $y_j=3u+1<(3/2)10^{d_j-1}+1$.
+\end{proof}
+
+\begin{theorem}[S12 : borne quantitative des répétitions pour un mot expansif normalisé]
+Soit $w$ un mot fixe reliant deux premières créations successives, avec $T_w(x)=g x+b$, $b\ge0$ et $\rho=g/10>1$. Supposons qu'une chaîne de $k$ copies consécutives de $w$ commence sur un record de longueur au moins $2$, lui-même postérieur à la première opération de la trajectoire. Alors
+\[
+\boxed{\rho^k<\frac85,\qquad k<\frac{\log(8/5)}{\log\rho}.}
+\]
+En particulier, un même mot à $\rho>1$ ne peut pas réaliser un nombre arbitrairement élevé de premières créations consécutives de longueur.
+\end{theorem}
+\begin{proof}
+Appliquons S11 aux records successifs. Les mantisses restent toutes strictement inférieures à $3/2+1/10=8/5$, car leurs longueurs sont au moins $2$. Comme $b\ge0$, chaque application de $w$ donne $z_{j+1}\ge\rho z_j$. Après $k$ répétitions, $z_k\ge\rho^k z_0\ge\rho^k$. La borne supérieure $z_k<8/5$ impose l'inégalité annoncée.
+\end{proof}
+\begin{remark}
+S12 généralise l'obstruction à quatre copies de $W_5=P(IP)^5I$ donnée en S7 : ici $\rho=729/640$ et $(729/640)^4>8/5$, donc au plus trois copies consécutives sont possibles après un record tardif. Les résultats S9--S12 demeurent à horizon fini et ne décident pas de la conjecture de Syracuse.
+\end{remark}
+
+\end{document}

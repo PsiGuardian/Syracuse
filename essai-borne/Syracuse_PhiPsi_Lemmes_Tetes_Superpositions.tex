@@ -1,0 +1,241 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[hidelinks]{hyperref}
+\newtheorem{lemme}{Lemme T}
+\newtheorem{theoreme}{Théorème de synthèse}
+\newtheorem*{corollaire}{Corollaire expérimental certifié}
+\newcommand{\ellg}{\ell}
+\newcommand{\vten}{\nu_{10}}
+\title{Syracuse $\Phi$--$\Psi$\\Lemmes dérivés sur les créations de tête et la superposition}
+\author{Complément de travail aux théorèmes 5.19 et 5.37}
+\date{17 novembre 2026}
+\begin{document}\maketitle
+\begin{abstract}
+Cette note déduit des identités exactes sur les variations de longueur décimale,
+les frontières de création temporaire ou persistante, la composition temporelle,
+l'érosion des suffixes superposés et les jonctions après divergence de parité.
+Les résultats sont universels à horizon fini. Le record initial
+$N=274133054632352106267$ sert d'exemple de vérification, non de preuve
+asymptotique ni de preuve de la conjecture de Syracuse.
+\end{abstract}
+
+\section*{Notations et base déjà établie}
+La transformation classique et la transformation condensée sont respectivement
+\[
+C(n)=\begin{cases}n/2&n\equiv0\pmod2,\\3n+1&n\equiv1\pmod2,\end{cases}
+\qquad
+U(n)=\begin{cases}n/2&n\equiv0\pmod2,\\(3n+1)/2&n\equiv1\pmod2.\end{cases}
+\]
+Pour $n\ge1$, sa longueur décimale est $\ellg(n)=1+\lfloor\log_{10}n\rfloor$.
+On prolonge $U$ à $0$ par $U(0)=0$.\par
+Les cellules $\Phi$--$\Psi$ réalisent exactement $U$ sur tout état décimal
+(théorème 5.19 de la v9). Le lemme 5.37 établit notamment la coïncidence
+initiale des parités de $n$ et $n+a10^L$ jusqu'au rang
+$r=L+\nu_2(a)$, où se produit la première divergence. Nous ne redémontrons
+pas ces deux résultats, mais les utilisons explicitement.
+
+\begin{lemme}[Pas de longueur élémentaire]
+Pour tout $n\ge1$,
+\[
+\ellg(C(n))-\ellg(n)\in\{-1,0,+1\}.
+\]
+Si $n$ est impair, la variation vaut $0$ ou $+1$; s'il est pair,
+elle vaut $0$ ou $-1$.
+\end{lemme}
+\begin{proof}
+Si $\ellg(n)=L$, alors $10^{L-1}\le n<10^L$.
+Pour $n$ impair, $n<3n+1<10^{L+1}$; pour $n$ pair,
+$10^{L-1}/2\le n/2<10^L/2$. Ces bornes interdisent toute autre variation.
+\end{proof}
+
+\begin{lemme}[Porte décimale et persistance immédiate]
+Soit $n$ impair de longueur $L$. Une création de tête par $3n+1$
+a lieu si et seulement si
+\[
+3n+1\ge10^L\quad\Longleftrightarrow\quad
+n\ge\frac{10^L-1}{3}=\underbrace{33\cdots3}_{L\text{ chiffres}}.
+\]
+La tête nouvellement créée disparaît à l'opération suivante de division
+par deux si et seulement si
+\[
+10^L\le3n+1<2\cdot10^L.
+\]
+Elle subsiste après cette division si et seulement si $3n+1\ge2\cdot10^L$.
+\end{lemme}
+\begin{proof}
+$3n+1<3\cdot10^L+1<10^{L+1}$ pour $L\ge1$ et $n<10^L$;
+le franchissement de $10^L$ caractérise donc la création d'une unique position.
+La parité de $3n+1$ est paire, et sa division conserve la nouvelle position
+si et seulement si $(3n+1)/2\ge10^L$.
+\end{proof}
+
+\begin{lemme}[Bilan télescopique des têtes]
+Soit $x_t=C^t(x_0)$, et notons
+\[
+A(s,t)=\#\{j\in[s,t):\ellg(x_{j+1})-\ellg(x_j)=1\},\quad
+B(s,t)=\#\{j\in[s,t):\ellg(x_{j+1})-\ellg(x_j)=-1\}.
+\]
+Alors, pour tous $0\le s<t$,
+\[
+\boxed{\ellg(x_t)-\ellg(x_s)=A(s,t)-B(s,t).}
+\]
+Si $t_i$ et $t_{i+1}$ sont deux instants successifs de première atteinte
+d'une longueur supérieure à toutes les longueurs précédentes,
+alors $A(t_i,t_{i+1})-B(t_i,t_{i+1})=1$.
+\end{lemme}
+\begin{proof}
+Il suffit de sommer $\ellg(x_{j+1})-\ellg(x_j)$ sur
+$j=s,\ldots,t-1$. Le lemme T1 assure qu'aucune longueur record
+ne peut être sautée.
+\end{proof}
+
+\begin{lemme}[Composition multiplicative exacte sur un intervalle]
+Pour $x_j=C^j(x_0)$, $0\le s<t$, notons $p$ le nombre de pas impairs
+$3x_j+1$, $q$ le nombre de divisions $x_j/2$, et
+$\mathcal I=\{j\in[s,t):x_j\text{ impair}\}$.
+Alors
+\[
+\boxed{\frac{x_t}{x_s}=\frac{3^p}{2^q}
+\prod_{j\in\mathcal I}\left(1+\frac{1}{3x_j}\right).}
+\]
+En conséquence,
+\[
+\ellg(x_t)-\ellg(x_s)
+=\left\lfloor\log_{10}x_s+p\log_{10}3-q\log_{10}2
++\sum_{j\in\mathcal I}\log_{10}\left(1+\frac1{3x_j}\right)\right\rfloor
+-\lfloor\log_{10}x_s\rfloor.
+\]
+\end{lemme}
+\begin{proof}
+À chaque pas impair, $x_{j+1}/x_j=3(1+1/(3x_j))$;
+à chaque pas pair, $x_{j+1}/x_j=1/2$.
+Le produit des ratios successifs se télescope.
+\end{proof}
+
+\begin{lemme}[Érosion exacte du suffixe dans une superposition]
+Soit $n\ge0$, $L\ge1$, $a\in\{1,\ldots,9\}$,
+$n'=n+a10^L$ et $r=L+\nu_2(a)$.
+Posons $x_h=U^h(n)$, $y_h=U^h(n')$ et
+$m_h=\#\{0\le j<h:x_j\text{ impair}\}$.
+Pour $0\le h\le r$, on a
+\[
+\boxed{y_h-x_h=\frac{a10^L3^{m_h}}{2^h}},\qquad
+\boxed{\nu_2(y_h-x_h)=r-h}.
+\]
+En notant $\nu_{10}(z)=\max\{k\ge0:10^k\mid z\}$ pour $z\neq0$,
+on obtient de plus la formule exacte
+\[
+\boxed{\vten(y_h-x_h)=\min\bigl(L,r-h\bigr),\qquad 0\le h\le r.}
+\]
+Le nombre de chiffres décimaux de pied identiques commence donc à $L$,
+reste égal à $L$ pendant $\nu_2(a)$ transitions, puis décroît exactement
+d'une unité par transition jusqu'à $0$ au rang $r$.
+\end{lemme}
+\begin{proof}
+Comme $\Delta_0=a10^L$ est divisible par $2^r$ et pas par $2^{r+1}$,
+la différence reste paire jusqu'au rang $r-1$. Les deux trajectoires suivent
+donc les mêmes branches avant le rang $r$ et la première identité résulte
+de la composition affine (argument du lemme 5.37).
+En prenant les valuations, $\nu_2(y_h-x_h)=L+\nu_2(a)-h$ et
+$\nu_5(y_h-x_h)=L+\nu_5(a)$.
+Par définition, $\nu_{10}=\min(\nu_2,\nu_5)$.
+Comme $a$ est un chiffre non nul, il ne peut être simultanément
+multiple de $2$ et de $5$; cela réduit le minimum à $\min(L,r-h)$.
+\end{proof}
+
+\begin{lemme}[Franchissement de tête pendant la superposition]
+Sous les hypothèses du lemme T5, pour toute position $k\ge1$ et
+tout $0\le h\le r$, le nombre $y_h$ franchit la frontière décimale
+$10^k$ alors que $x_h$ ne la franchit pas si et seulement si
+\[
+\boxed{x_h<10^k\le y_h
+\ \Longleftrightarrow\ 
+x_h<10^k\text{ et }a10^L3^{m_h}\ge2^h(10^k-x_h).}
+\]
+Cette condition peut être satisfaite bien avant la première divergence
+de parité $h=r$.
+\end{lemme}
+\begin{proof}
+Pour $h\le r$, substituer au terme $y_h-x_h$ l'identité exacte
+du lemme T5. La comparaison avec $10^k$ est alors équivalente à
+l'inégalité affichée, sans approximation.
+\end{proof}
+
+\begin{lemme}[Jonction de superposition après rupture de parité]
+Pour deux trajectoires quelconques $x_h=U^h(n)$,
+$y_h=U^h(n')$, posons $\Delta_h=y_h-x_h$ et
+$p_h=x_h\bmod2$, $p'_h=y_h\bmod2$.
+Alors, à tous les rangs $h\ge0$,
+\[
+\boxed{\Delta_{h+1}
+=\frac{(1+2p'_h)\Delta_h+(p'_h-p_h)(2x_h+1)}2.}
+\]
+En particulier, lorsque $p_h=p'_h$, la différence suit la loi
+multiplicative $\Delta_{h+1}=(1+2p_h)\Delta_h/2$;
+à la première rupture, un terme de jonction dépendant de l'état $x_h$
+apparaît exactement.
+\end{lemme}
+\begin{proof}
+On utilise $U(z)=((1+2(z\bmod2))z+(z\bmod2))/2$ pour $z=x_h,y_h$,
+puis on soustrait et on remplace $y_h=x_h+\Delta_h$.
+\end{proof}
+
+\begin{theoreme}[Couplage tête--pied et extension décimale à horizon fini]
+Soit $N\ge1$. Pour chaque $L\ge1$, on définit
+$S_L=N\bmod10^L$ et $a_L=\lfloor N/10^L\rfloor\bmod10$.
+Si $a_L=0$, $S_{L+1}=S_L$ et leurs trajectoires sont identiques.
+Si $a_L\neq0$, on pose $r_L=L+\nu_2(a_L)$.
+Alors, pour tout horizon fini $H$, les différences
+$U^h(S_{L+1})-U^h(S_L)$, leurs suffixes communs et les franchissements
+de frontières $10^k$ sont entièrement déterminés par :
+(1) le lemme T5 pour $h\le r_L$;
+(2) le lemme T7 à partir de $h=r_L$;
+(3) le critère de frontière T6 aux rangs communs;
+(4) le même opérateur $\mathscr F$ du théorème 5.19 pour tous les états.
+Aucune règle locale nouvelle n'est requise pour la variation de longueur
+ou la jonction après rupture de parité.
+\end{theoreme}
+\begin{proof}
+On procède par récurrence sur $h$. Avant et jusqu'à $r_L$, le lemme T5
+fournit la différence et T6 permet de décider tout franchissement.
+À partir de $r_L$, les deux états complets sont déterminés par
+$\mathscr F$ et la différence au pas suivant par T7.
+La récurrence fournit les identités à chaque horizon fini.
+\end{proof}
+
+\section*{Contrôle arithmétique du record à 42 chiffres}
+Pour $N=274133054632352106267$, les 570 premières transitions de $C$
+comprennent 247 pas impairs et 323 pas pairs : 114 montées locales de
+longueur, 93 diminutions et 363 transitions sans variation de longueur.
+D'où $114-93=21$, et $\ellg(C^{570}(N))=42$.
+Les 21 premières atteintes des longueurs $22,\ldots,42$ sont toutes suivies
+d'une division faisant perdre immédiatement le chiffre créé.
+L'état au rang 570 est
+\[
+C^{570}(N)=113298124744388651798242538014293435290632.
+\]
+Pour la superposition des suffixes de 20 et 21 chiffres, $a_{20}=2$ et
+$r_{20}=20+\nu_2(2)=21$.
+Le lemme T5 donne donc exactement
+\[
+\nu_{10}\bigl(U^h(S_{21})-U^h(S_{20})\bigr)
+=\min(20,21-h),\quad 0\le h\le21.
+\]
+Au rang classique $3$, la tête atteint 22 chiffres pour $N$ mais seulement
+21 chiffres pour $S_{20}$; cette divergence des longueurs n'exige pas
+une divergence préalable des parités.
+
+\section*{Portée et limite logique}
+T1--T7 constituent des identités et critères universels;
+le contrôle sur $N$ est un exemple fini.
+Le théorème de couplage complète les observables de la superposition
+sans prétendre classifier les orbites à horizon infini.
+Les préfixes finis de profondeurs dyadiques restent tous réalisables
+(selon l'étude v15); aucune exclusion universelle des trajectoires
+divergentes n'est démontrée ici.
+
+\end{document}

@@ -1,0 +1,190 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,longtable,array}
+\usepackage[margin=2.4cm]{geometry}
+\usepackage[hidelinks]{hyperref}
+\newtheorem{lemmet}{Lemme T}
+\setcounter{lemmet}{7}
+\newtheorem*{corollaire}{Corollaire}
+\newtheorem*{remarque}{Remarque}
+\DeclareMathOperator{\val}{val}
+\newcommand{\ellg}{\ell}
+\newcommand{\UU}{U}
+\newcommand{\CC}{C}
+\title{Syracuse $\Phi$--$\Psi$\\Huit lemmes nouveaux sur les maxima et les superpositions}
+\author{Complément de travail aux théorèmes 5.15, 5.19, 5.37 et aux lemmes T1--T7}
+\date{17 novembre 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Ce complément exploite le dossier comparatif des 21 nombres records (1 à 21 chiffres), les 230 créations inédites de tête et les 210 jonctions entre suffixes. Les lemmes T8--T15 sont des conséquences arithmétiques générales, à horizon fini sauf mention contraire. Le lemme T14 est un contre-exemple calculatoire explicite, vérifié par les trajectoires entières des quatre nombres cités. Ni les records ni ces résultats ne démontrent la convergence universelle de Syracuse.
+\end{abstract}
+
+\section*{Conventions et résultats préexistants}
+Pour $n\ge1$, on pose
+\[
+ \UU(n)=\begin{cases}n/2&n\equiv0\pmod2,\\(3n+1)/2&n\equiv1\pmod2,\end{cases}
+ \qquad
+ \CC(n)=\begin{cases}n/2&n\equiv0\pmod2,\\3n+1&n\equiv1\pmod2.\end{cases}
+\]
+La longueur décimale vaut $\ellg(n)=1+\lfloor\log_{10}n\rfloor$.
+Pour un préfixe $\UU$ de longueur $H$, définissons
+\[
+ M_U(n,H)=\max_{0\le h\le H}\UU^h(n),\qquad
+ G_U(n,H)=\ellg(M_U(n,H))-\ellg(n).
+\]
+Soit $M_C(n,H)$ le maximum de la \emph{suite classique développée} correspondant aux $H$ premiers pas de $\UU$ (chaque étape impaire de $\UU$ est remplacée par $\times3+1$, puis $\div2$). Posons $G_C(n,H)=\ellg(M_C(n,H))-\ellg(n)$.
+Le manuscrit v9, proposition 5.15, donne pour un mot fixé de $H$ parités $p_0,\ldots,p_{H-1}$ :
+\[
+ \UU^h(n)=\frac{3^{m_h}n+B_h}{2^h},\quad
+ m_h=\sum_{j<h}p_j,\quad B_0=0,\quad
+ B_{h+1}=3^{p_h}B_h+p_h2^h\qquad(0\le h\le H).
+\]
+Le lemme 5.37 donne, pour $y=x+a10^L$ avec $1\le a\le9$, la coïncidence des décisions de parité des deux trajectoires sous $\UU$ jusqu'au rang $r=L+\nu_2(a)$, et la première divergence au rang $r$.
+
+\begin{lemmet}[Écart de maximum entre classique et accéléré]
+Pour tout $n\ge1$ et $H\ge0$,
+\[
+ \boxed{M_U(n,H)\le M_C(n,H)\le2M_U(n,H)},\qquad
+ \boxed{G_C(n,H)-G_U(n,H)\in\{0,1\}}.
+\]
+Plus précisément, en posant $D=\ellg(M_U(n,H))$, la différence des gains vaut $1$ si et seulement si une étape impaire avant le rang $H$ produit $2\UU^{h+1}(n)\ge10^D$.
+\end{lemmet}
+\begin{proof}
+Les valeurs de la suite classique développée sont soit des états de $\UU$, soit l'état intermédiaire $3u+1=2\UU(u)$ créé lorsqu'un état $u$ est impair. Le maximum de ces valeurs est compris entre $M_U$ et $2M_U$. Le double d'un entier ne peut augmenter sa longueur décimale que de zéro ou un chiffre. La condition finale exprime exactement le franchissement de la frontière $10^D$ par un état intermédiaire.
+\end{proof}
+
+\begin{lemmet}[Stabilité du gain maximal avant la première divergence]
+Soit $L\ge1$, $10^{L-1}\le x<10^L$, $1\le a\le9$, $y=x+a10^L$ et $r=L+\nu_2(a)$. Alors pour tout $0\le h\le r$ :
+\[
+ \boxed{0\le\ellg(\UU^h(y))-\ellg(\UU^h(x))\le2}.
+\]
+Pour les gains maximaux, y compris ceux de leurs suites classiques développées synchronisées sur les $r$ premières transitions de $\UU$ :
+\[
+ \boxed{-1\le G_U(y,r)-G_U(x,r)\le1},\qquad
+ \boxed{-1\le G_C(y,r)-G_C(x,r)\le1}.
+\]
+\end{lemmet}
+\begin{proof}
+La formule affine commune issue du manuscrit v9 donne, pour $0\le h\le r$ :
+\[
+ \frac{\UU^h(y)}{\UU^h(x)}
+ =\frac{3^{m_h}y+B_h}{3^{m_h}x+B_h}
+ \le\frac yx=1+\frac{a10^L}{x}\le1+10a\le91<100.
+\]
+Le rapport est supérieur à $1$, car la formule affine est strictement croissante. Ainsi la différence de longueurs décimales appartient à $\{0,1,2\}$. Les maxima obtenus sur un même ensemble de rangs ont aussi des longueurs qui diffèrent de $0$, $1$ ou $2$. Comme $\ellg(y)=L+1$ et $\ellg(x)=L$, la différence des gains relatifs appartient à $\{-1,0,1\}$.
+Pour les suites classiques synchronisées, chaque état intermédiaire éventuel $3u+1$ est construit dans les deux trajectoires à la même position temporelle, parce que leurs parités accélérées coïncident avant le rang $r$. Cette transformation affine à coefficient et terme additif communs conserve la borne de rapport $y/x$. La conclusion précédente s'applique donc aussi aux maxima classiques développés.
+\end{proof}
+
+\begin{lemmet}[Grand saut de gain : nécessité d'une évolution après divergence]
+Sous les hypothèses de T9, supposons que les maxima globaux de $x$ et $y$ existent et sont atteints. Si
+\[
+ \boxed{|N^+(y)-N^+(x)|>1}
+\]
+(où les deux gains sont définis avec la même convention, classique ou accélérée), alors au moins une de ces deux trajectoires atteint son maximum global après le préfixe commun de $r$ transitions accélérées.
+\end{lemmet}
+\begin{proof}
+Si les deux maxima se produisaient dans le préfixe commun, les gains globaux seraient égaux aux gains préfixes de T9. Leur différence appartiendrait alors à $[-1,1]$, contradiction.
+\end{proof}
+
+\begin{lemmet}[Préimage exacte des records de longueur à mot de parité fixé]
+Fixons une longueur initiale $L$, un horizon $H\ge1$, un mot de parité réalisable $w=(p_0,\ldots,p_{H-1})$ et un gain cible $g\ge1$. Notons $m_h(w)$ et $B_h(w)$ les coefficients affines du mot au rang $h$, $0\le h\le H$. Définissons :
+\[
+ \boxed{T_{w,L,g}=\min_{0\le h\le H}
+ \left\lceil\frac{2^h10^{L+g-1}-B_h(w)}{3^{m_h(w)}}\right\rceil.}
+\]
+Alors tout entier $n$ de longueur $L$ réalisant le mot $w$ satisfait exactement
+\[
+ \boxed{G_U(n,H)\ge g\quad\Longleftrightarrow\quad n\ge T_{w,L,g}.}
+\]
+En particulier, le gain maximal à horizon fini est non décroissant lorsque $n$ augmente au sein d'un même mot de parité et d'une même longueur initiale.
+\end{lemmet}
+\begin{proof}
+Le gain $G_U(n,H)\ge g$ équivaut à l'existence d'un rang $0\le h\le H$ tel que $\UU^h(n)\ge10^{L+g-1}$. L'écriture affine du manuscrit v9 transforme cette condition en
+$3^{m_h(w)}n+B_h(w)\ge2^h10^{L+g-1}$, ou encore
+$n\ge\lceil(2^h10^{L+g-1}-B_h(w))/3^{m_h(w)}\rceil$.
+L'union des $H+1$ demi-droites correspond à la demi-droite partant du plus petit de ces seuils. La propriété de monotonie en découle.
+\end{proof}
+
+\begin{lemmet}[Dénombrement exact des configurations de gain fixé, sans parcourir chaque trajectoire]
+Sous les hypothèses de T11, il existe un unique résidu $s_w\pmod{2^H}$ correspondant au mot de parité $w$ (résultat de réalisation des mots finis du manuscrit v9). Posons
+\[
+ A=\max(10^{L-1},T_{w,L,g}),\quad B=10^L-1,\quad q=2^H.
+\]
+Le nombre des entiers de longueur $L$, ayant ce mot de parité et vérifiant $G_U(n,H)\ge g$, vaut exactement
+\[
+ \boxed{\max\left(0,\left\lfloor\frac{B-s_w}{q}\right\rfloor-
+ \left\lceil\frac{A-s_w}{q}\right\rceil+1\right).}
+\]
+Le dénombrement total s'obtient par somme sur les $2^H$ mots de parité réalisables.
+\end{lemmet}
+\begin{proof}
+Les entiers recherchés sont précisément les éléments de la progression arithmétique $s_w+q\mathbb Z$ appartenant à l'intervalle entier $[A,B]$, par T11. Les deux opérations de partie entière comptent ses indices admissibles. Les classes résiduelles associées à des mots distincts sont disjointes, ce qui autorise la somme.
+\end{proof}
+
+\begin{lemmet}[Famille explicite de gains de tête arbitrairement grands]
+Pour $r\ge1$, posons $n_r=2^r-1$. Alors, pour tout $0\le j\le r$,
+\[
+ \boxed{\UU^j(n_r)=3^j2^{r-j}-1},
+\]
+les $r$ premières transitions sont impaires, et en particulier
+\[
+ \UU^r(n_r)=3^r-1.
+\]
+En conséquence,
+\[
+ \boxed{G_U(n_r,r)\ge\ellg(3^r-1)-\ellg(2^r-1)
+ \ge\lfloor r\log_{10}(3/2)\rfloor.}
+\]
+Il existe donc, pour tout $K\ge1$, un entier positif dont la trajectoire atteint au moins $K$ positions décimales supplémentaires.
+\end{lemmet}
+\begin{proof}
+Le terme $3^j2^{r-j}-1$ est impair lorsque $j<r$. L'étape suivante de $\UU$ donne
+\((3(3^j2^{r-j}-1)+1)/2=3^{j+1}2^{r-j-1}-1\).
+D'où l'identité par récurrence. Par ailleurs,
+\((3^r-1)/(2^r-1)>(3/2)^r\), et pour $a>b>0$,
+\(\lfloor\log_{10}a\rfloor-\lfloor\log_{10}b\rfloor\ge\lfloor\log_{10}(a/b)\rfloor\).
+La borne affichée suit. Son membre droit tend vers l'infini avec $r$.
+\end{proof}
+
+\begin{lemmet}[Le délai de jonction ne détermine pas le gain global]
+Il n'existe pas de fonction de la seule donnée $(L,a,L+\nu_2(a))$ donnant, pour tous les couples $x,x+a10^L$ de nombres positifs qui atteignent $1$, leur différence de gain maximal global classique.
+\end{lemmet}
+\begin{proof}
+Considérons les deux couples suivants, déjà présents dans les 210 jonctions calculées :
+\[
+\begin{array}{c|r|r|r|r|r}
+ &x&y=x+7\cdot10^{19}&N_C^+(x)&N_C^+(y)&\Delta N_C^+\\\hline
+ A&1149323674102624415&71149323674102624415&1&20&19\\
+ B&4133054632352106267&74133054632352106267&3&3&0
+\end{array}
+\]
+Dans les deux cas, $L=19$, $a=7$ et le premier rang de divergence de parité est $r=19$. Les valeurs affichées sont vérifiables par itération entière des quatre trajectoires jusqu'à $1$ (données et script joints au dossier des 21 records). Les différences globales $19$ et $0$ sont distinctes. Aucune fonction des seules trois données indiquées ne peut donc les représenter toutes deux.
+\end{proof}
+
+\begin{lemmet}[Somme exacte des frontières de tête franchies pendant une superposition]
+Soit $x>0$, $y=x+a10^L$ comme dans T9. Pour $0\le h\le r$, en notant $x_h=\UU^h(x)$ et $m_h$ le nombre de transitions impaires communes, nous avons
+\[
+\boxed{
+\ellg(\UU^h(y))-\ellg(\UU^h(x))
+=\sum_{k\ge1}
+\mathbf 1\!\left\{x_h<10^k\ \land\
+ a10^L3^{m_h}\ge2^h(10^k-x_h)\right\}.}
+\]
+La somme contient au plus deux termes non nuls sous l'hypothèse que $x$ possède exactement $L$ chiffres.
+\end{lemmet}
+\begin{proof}
+Pour deux entiers positifs $x_h<y_h$, la différence de leurs longueurs décimales est exactement le nombre de puissances $10^k$ dans l'intervalle $(x_h,y_h]$. Avant la divergence, le lemme 5.37 donne $y_h-x_h=a10^L3^{m_h}/2^h$, ce qui transforme le franchissement $x_h<10^k\le y_h$ en l'inégalité affichée. T9 fournit la borne deux.
+\end{proof}
+
+\section*{Observations finies contrôlées (non universalisées)}
+Le dossier de calcul des 21 trajectoires contient 230 créations inédites de longueurs, dont 215 disparaissent à la division classique suivante, et 210 jonctions de suffixes, dont 192 non nulles. Pour ces 210 jonctions, $\Delta N_C^+$ est positif dans 72 cas, nul dans 105 cas et négatif dans 33 cas; les valeurs observées vont de $-3$ à $+19$. Ce sont des données finies, non des probabilités universelles.
+
+\paragraph{Interprétation principale.}
+Les lemmes T9--T10 séparent rigoureusement l'influence d'une tête supplémentaire \emph{avant} la divergence de parité et la variation ultérieure des maxima. Les lemmes T11--T12 fournissent des seuils arithmétiques exacts, à mot de parité et horizon fixés, permettant de classer les gains sans suivre séparément chaque entier de la classe. Le lemme T13 démontre que les créations de tête peuvent être arbitrairement nombreuses lorsque la longueur du nombre initial n'est pas bornée; il ne démontre aucune divergence d'une trajectoire positive fixée.
+
+\section*{Limite de portée}
+Toutes les formules de partition et de stabilité sont exactes à horizon fini. Le passage à une classification de \emph{toutes les trajectoires infinies} nécessite encore une justification supplémentaire : l'exhaustivité des préfixes finis ne suffit pas, seule, à décider de la convergence de chaque entier positif.
+\end{document}
